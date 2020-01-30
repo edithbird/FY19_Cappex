@@ -1,0 +1,376 @@
+---
+title: "FY19 Cappex Performance"
+author: "Office of Marketing and Brand Management"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
+<img src="logo.png" style="position:absolute;top:0px;right:0px;" height=200px width = 100px />
+
+
+
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+
+```{r}
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(tufte)
+#<img src="logo.JPG" style="position:absolute;top:0px;right:0px; padding:1px;z-index:60;" />
+```
+
+# Description
+
+In FY19, the Office of Marketing and Brand Management at USM contracted with Cappex for one year to acquire HS student inquiries, as it has done for the past several years. Our goals with Cappex are to generate inquiries and applications.
+
+
+## Contract Details
+
+* Run time November 6, 2018 - November 5, 2019
+
+* Contract cost = $16,500.00
+
+* Qualifying Criteria: 
+
+  + Sophomores, Juniors, Seniors
+
+  + ME, MA, CT, VT, NH, NY, RI
+
+  + Minimum GPA 2.5
+
+
+
+
+```{r}
+FY <- c("FY15", "FY16", "FY17", "FY18", "FY19")
+```
+
+```{r}
+Number_Inquiries_NE <- c("5,124", "4,903", "1,305", "1,555", "Not yet available")
+```
+
+
+Historical overview of Inquiries generated:
+
+```{r}
+YoY <- cbind.data.frame(FY, Number_Inquiries_NE) %>% rename(Inquiries = Number_Inquiries_NE) 
+kable(YoY)
+
+```
+
+
+The drop from FY16 to FY17 is attributed to a change in the contract. After assessing previous years' data, we moved from a nationwide geo-focus to a New England geo-focus
+
+```{r}
+Inquiries <- read.csv("/Users/christine.iyer/Box/FY19_Inquiries/Init_Cappex.csv", header = T, stringsAsFactors = F)
+InquiriesClass <- read.csv("/Users/christine.iyer/Box/FY19_Inquiries/All_Cappex.csv", header = T, stringsAsFactors = F)
+
+CappexFunnel <- read.csv("/Users/christine.iyer/Box/FY19_Inquiries/InitCPPX_V3.csv", header = T, stringsAsFactors = F)
+```
+
+## Findings
+
+Cappex Generated Inquiries: **Initial Referral Source** 
+
+
+```{r}
+
+kable(CappexFunnel %>% 
+        group_by(FiscalYear) %>% 
+        summarise(Inquiries = prettyNum(sum(Inquiries), big.mark = ",")))
+```
+
+Conversions through the funnel (Cappex as the Initial Referral Source)
+
+
+```{r}
+
+#head(CappexFunnel)
+kable(CappexFunnel %>% 
+        group_by(FiscalYear) %>% 
+        summarise(Inquiries = sum(Inquiries), 
+                  Applications = sum(Applications), 
+                  Enrolls = sum(Enrolls), 
+                  App_Yield = paste0(round(Applications/Inquiries*100,2), "%"), 
+                  Enroll_Yield = paste0(round(Enrolls/Inquiries*100, 2), "%" ),
+                  Inquiries = prettyNum(sum(Inquiries), big.mark = ","),
+                  Applications = prettyNum(sum(Applications), big.mark = ","), 
+                  Admits = prettyNum(sum(Admits), big.mark = ","), 
+                  Confirms = prettyNum(sum(Confirms), big.mark = ","),
+                  Enrolls = prettyNum(sum(Enrolls), big.mark = ",") 
+                  ) %>% 
+        select(FiscalYear, Inquiries, Applications, Admits, Confirms, Enrolls, App_Yield, Enroll_Yield))
+     
+
+```
+
+Inquiries by Class (Cappex as the Initial Referral Source)
+
+**Senior**
+
+
+```{r}
+
+kable(CappexFunnel %>% 
+        group_by(FiscalYear, Class) %>% 
+        filter(Class == "Senior") %>% 
+        summarise(Inquiries = sum(Inquiries), 
+                  Applications = sum(Applications), 
+                  Enrolls = sum(Enrolls), 
+                  App_Yield = paste0(round(Applications/Inquiries*100,2), "%"), 
+                  Enroll_Yield = paste0(round(Enrolls/Inquiries*100, 2), "%" ),
+                  Inquiries = prettyNum(sum(Inquiries), big.mark = ","),
+                  Applications = prettyNum(sum(Applications), big.mark = ","), 
+                  Admits = prettyNum(sum(Admits), big.mark = ","), 
+                  Confirms = prettyNum(sum(Confirms), big.mark = ","),
+                  Enrolls = prettyNum(sum(Enrolls), big.mark = ",") 
+                  ) %>% 
+        select(FiscalYear, Inquiries, Applications, Admits, Confirms, Enrolls, App_Yield, Enroll_Yield) )
+     
+
+```
+
+
+**Junior**
+
+
+```{r}
+
+kable(CappexFunnel %>% 
+        group_by(FiscalYear, Class) %>% 
+        filter(Class == "Junior") %>% 
+        summarise(Inquiries = sum(Inquiries), 
+                  Applications = sum(Applications), 
+                  Enrolls = sum(Enrolls), 
+                  App_Yield = paste0(round(Applications/Inquiries*100,2), "%"), 
+                  Enroll_Yield = paste0(round(Enrolls/Inquiries*100, 2), "%" ),
+                  Inquiries = prettyNum(sum(Inquiries), big.mark = ","),
+                  Applications = prettyNum(sum(Applications), big.mark = ","), 
+                  Admits = prettyNum(sum(Admits), big.mark = ","), 
+                  Confirms = prettyNum(sum(Confirms), big.mark = ","),
+                  Enrolls = prettyNum(sum(Enrolls), big.mark = ",") 
+                  ) %>% 
+        select(FiscalYear, Inquiries, Applications, Admits, Confirms, Enrolls, App_Yield, Enroll_Yield) )
+
+```
+
+**Sophomore**
+
+
+```{r}
+
+kable(CappexFunnel %>% 
+        group_by(FiscalYear, Class) %>% 
+        filter(Class == "Sophomore or Unknown") %>% 
+        summarise(Inquiries = sum(Inquiries), 
+                  Applications = sum(Applications), 
+                  Enrolls = sum(Enrolls), 
+                  App_Yield = paste0(round(Applications/Inquiries*100,2), "%"), 
+                  Enroll_Yield = paste0(round(Enrolls/Inquiries*100, 2), "%" ),
+                  Inquiries = prettyNum(sum(Inquiries), big.mark = ","),
+                  Applications = prettyNum(sum(Applications), big.mark = ","), 
+                  Admits = prettyNum(sum(Admits), big.mark = ","), 
+                  Confirms = prettyNum(sum(Confirms), big.mark = ","),
+                  Enrolls = prettyNum(sum(Enrolls), big.mark = ",") 
+                  ) %>% 
+        select(FiscalYear, Inquiries, Applications, Admits, Confirms, Enrolls, App_Yield, Enroll_Yield))
+     
+
+```
+
+---
+
+## **All Cappex Inquiries**, Regardless of Initial Referral Source
+
+
+```{r}
+InquiriesClass <- read.csv("/Users/christine.iyer/Box/FY19_Inquiries/All_CappexFinal.csv", header = T, stringsAsFactors = F)
+
+kable(InquiriesClass %>% 
+  mutate(Class = ifelse(Class == 0, "Senior", 
+                        ifelse(Class == 1, "Junior", 
+                               ifelse(Class == 2, "Sophomore", "Freshman, Younger, Unknown")))) %>% 
+    
+  filter(Referral.Source..Created.Date..group. != "FY16") %>%
+  filter(Referral.Source..Created.Date..group. != "FY20") %>% 
+    
+    
+  group_by(FiscalYear = Referral.Source..Created.Date..group.) %>% 
+  summarise(Inquiry = prettyNum(sum(Inquiry), big.mark = ","), Enrolled = sum(Enrolled))) 
+```
+
+
+---
+
+# ROI 
+
+The FY19 Cappex contract for student inquiry names cost $16,500.00. Of the 689 student inquiries referred during this same fiscal year, 253 or 37% of them seniors, 4 have enrolled to date. Three are from Maine, and one from outside of New England. The table below shows this data, along with the projected revenue amount, based on tuition from thirty credits over one year/enrollment. The revenue is based on the cost per undergraduate credit,   \$281/In-State credit, \$739/Out-of-State credit,  and \$464/New England RSP credit for one academic year. 
+
+
+
+
+## FY19 ROI 
+
+
+The table below shows the number of inquiries and enrollments where Cappex is the initial referral source. Inquiries include senior, junior, and sophomore students. Enrollments include Seniors who enrolled in the same fiscal year that the contract was signed (2018). 
+
+
+
+`r margin_note("Note: Student.Cost equals Gross Revenue, i.e, the Cappex contract cost has not yet been subtracted.")`
+
+
+
+```{r}
+
+Funnel19 <- CappexFunnel %>% 
+  # mutate(Class = 
+  #          ifelse(Class == 0, "Senior", 
+  #                       ifelse(Class == 1, "Junior", 
+  #                              ifelse(Class == 2, "Sophomore", "Freshman, Younger, Unknown")))) %>% 
+  filter(FiscalYear == "FY19")%>%
+  group_by(Region) %>% 
+  summarise(
+    Inquiries = sum(Inquiries), 
+    Enrolls = sum(Enrolls),
+    Cost_per_Inq = paste0("$",round(16500/Inquiries,2)))
+
+    
+
+#fix Math
+Funnel19 <- Funnel19 %>% 
+  mutate(Tuition = 
+           ifelse(Region == "Maine", 8430, 
+           ifelse(Region == "NE Excluding Maine", 13920, 22170)),
+         Revenue = paste0("$", prettyNum(Enrolls * Tuition, big.mark = ","), ".00")
+         ) %>% select(Region, Inquiries, Enrolls, Revenue)
+
+kable(Funnel19)
+
+```
+
+--- 
+
+Below is the same summary for the previous two years.  
+
+## FY18 
+
+```{r}
+
+Funnel18 <- CappexFunnel %>% 
+  # mutate(Class = 
+  #          ifelse(Class == 0, "Senior", 
+  #                       ifelse(Class == 1, "Junior", 
+  #                              ifelse(Class == 2, "Sophomore", "Freshman, Younger, Unknown")))) %>% 
+  filter(FiscalYear == "FY18")%>%
+  group_by(Region) %>% 
+  summarise(
+    Inquiries = sum(Inquiries), 
+    Enrolls = sum(Enrolls),
+    Cost_per_Inq = paste0("$",round(16500/Inquiries,2)))
+
+    
+
+
+Funnel18 <- Funnel18 %>% 
+  mutate(Tuition = 
+           ifelse(Region == "Maine", 8430, 
+           ifelse(Region == "NE Excluding Maine", 13920, 22170)),
+         Revenue = paste0("$", prettyNum(Enrolls * Tuition, big.mark = ","), ".00")
+         ) %>% select(Region, Inquiries, Enrolls, Revenue)
+
+kable(Funnel18)
+
+```
+
+
+## FY17 
+
+```{r}
+
+Funnel17 <- CappexFunnel %>% 
+  # mutate(Class = 
+  #          ifelse(Class == 0, "Senior", 
+  #                       ifelse(Class == 1, "Junior", 
+  #                              ifelse(Class == 2, "Sophomore", "Freshman, Younger, Unknown")))) %>% 
+  filter(FiscalYear == "FY17")%>%
+  group_by(Region) %>% 
+  summarise(
+    Inquiries = sum(Inquiries), 
+    Enrolls = sum(Enrolls),
+    Cost_per_Inq = paste0("$",round(16500/Inquiries,2)))
+
+    
+
+
+Funnel17 <- Funnel17 %>% 
+  mutate(Tuition = 
+           ifelse(Region == "Maine", 8430, 
+           ifelse(Region == "NE Excluding Maine", 13920, 22170)),
+         Revenue = paste0("$", prettyNum(Enrolls * Tuition, big.mark = ","), ".00")
+         ) %>% select(Region, Inquiries, Enrolls, Revenue)
+
+kable(Funnel17)
+
+```
+
+
+## FY16
+
+```{r}
+
+Funnel16 <- CappexFunnel %>% 
+  # mutate(Class = 
+  #          ifelse(Class == 0, "Senior", 
+  #                       ifelse(Class == 1, "Junior", 
+  #                              ifelse(Class == 2, "Sophomore", "Freshman, Younger, Unknown")))) %>% 
+  filter(FiscalYear == "FY16")%>%
+  group_by(Region) %>% 
+  summarise(
+    Inquiries = sum(Inquiries), 
+    Enrolls = sum(Enrolls),
+    Cost_per_Inq = paste0("$",round(16500/Inquiries,2)))
+
+    
+
+
+Funnel16 <- Funnel16 %>% 
+  mutate(Tuition = 
+           ifelse(Region == "Maine", 8430, 
+           ifelse(Region == "NE Excluding Maine", 13920, 22170)),
+         Revenue = paste0("$", prettyNum(Enrolls * Tuition, big.mark = ","), ".00")
+         ) %>% select(Region, Inquiries, Enrolls, Revenue)
+
+kable(Funnel16)
+
+```
+
+---
+
+# Conclusions
+
+* Duplicates in our system may cause our numbers to vary from others used.
+
+* There have been fewer Cappex initial inquiries in FY19, however the anticipated revenue justifies the contract cost. 
+
+* Junior inquiries convert into applications and enrollments at a higher rate than Seniors and Sophomores. 
+
+
+
+

@@ -1,0 +1,426 @@
+---
+title: "Marketing Report"
+subtitle: "Office of Marketing and Brand Management"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_html: default
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+
+library(formatR)
+library(knitr)
+library(janitor)
+library(tidyr)
+library(zoo)
+library(lubridate)
+library(hms)
+library(dplyr)
+library(ggplot2)
+library(gtable)
+library(grid)
+library(ggpubr)
+library(kableExtra)
+library(scales)
+library(hms)
+library(stringr)
+library(data.table)
+library(stringr)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+	echo = FALSE,
+	cache.extra = packageVersion("tufte"),
+	tidy = FALSE
+)
+options(htmltools.dir.version = FALSE)
+```
+
+# FY19 Cappex Performance and Comparison to Previous Years 
+
+
+# Description
+
+`r newthought('In FY19, the Office of Marketing and Brand Management')` at USM contracted with Cappex for one year to acquire HS student inquiries, as it has done for the past several years. 
+
+
+#
+
+## Contract Details
+
+
+```{r eval=FALSE, include=FALSE}
+# Historical referral quantities per Cappex
+# 
+# 11/6/2014-11/5/2015: 5124 (1201)
+# 
+# 11/6/2015-11/5/2016: 4903 (1329)
+# 
+# 11/6/2016-11/5/2017: 1305
+# 
+# 11/6/2017-11/5/2018: 1555 
+# 
+# 11/6/2018 - 11/5/19: 1345
+
+```
+
+
+* Run time November 6, 2018 - November 5, 2019
+
+
+* Contract cost = $16,500.00
+
+# Qualifying Criteria: 
+
++ Sophomores, Juniors, Seniors
+
++ ME, MA, CT, VT, NH, NY, RI
+
++ Minimum GPA 2.5
+
+
+# Findings
+
+
+
+```{r}
+FY <- c("CY15", "CY16", "CY17", "CY18", "CY19")
+```
+
+```{r}
+Number_Inquiries_NE <- c(1201, 1329, 1305, 1555, 1345)
+```
+
+
+
+Per Cappex, the assets we have historically purchased are shown below. 
+
+```{r}
+YoY <- cbind.data.frame(FY, Number_Inquiries_NE) %>% rename(Inquiries = Number_Inquiries_NE) %>% mutate(Inquiries = prettyNum(Inquiries, big.mark = ","))
+YoY <- YoY %>% 
+  rename(Contract_Yr = FY)
+kable(YoY)
+
+```
+
+
+```{r}
+Data <- read.csv("C:/Users/christine.iyer/Box/FY19_Inquiries/Cappex Summary/CappexInit11-12-19.csv", header = T, stringsAsFactors = F)
+
+Data <- Data %>% 
+  rename(Contract_Yr = Created.Date..group.,
+         Anticipated_Start = Anticipated.Start.Term.Year..group.)
+
+```
+
+#
+
+#
+
+#
+
+#
+
+
+# Enrollment Funnel per our Database by Contract Year 
+
+Unless otherwise stated, Cappex is the **Initial Referral Source**
+
+
+```{r}
+
+kable(Data %>% group_by(Contract_Yr) %>% 
+        filter(Contract_Yr != "Contract 16" & Contract_Yr != "Contract 20") %>% 
+        summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled))) 
+```
+
+# Enrollment Funnel per our Database by Anticipated Start Year
+
+
+
+```{r}
+
+season <- c("Fall 2017 ", "Fall 2018", "Fall 2019 ", "Fall 2020 ", "Fall 2021")
+
+kable(Data %>%
+  filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) ) 
+
+```
+
+
+#
+
+# Enrollment Funnel per our Database by Contract Year and Anticipated Start Year
+
+
+
+
+**Contract Year 2017: 11/6/2016-11/5/2017**
+
+```{r message=FALSE, warning=FALSE}
+
+
+Data17 <- Data %>% 
+        filter(Contract_Yr == "Contract 17") %>% 
+        group_by(Contract_Yr, Anticipated_Start) %>% 
+        summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+        mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%")) %>% 
+        filter(Inquiries > 43) %>%
+        mutate(Class = ifelse(Inquiries == 106, "Seniors", 
+                              ifelse(Inquiries == 510, "Juniors", 
+                                     ifelse(Inquiries == 257, "Sophomores", "Freshmen")))) 
+kable(Data17 %>% 
+        select(Class, Inquiries, Apps, Admits, Deposits, Enrolls, App_Yield))
+```
+
+#
+
+**Contract Year 2018: 11/6/2017-11/5/2018**
+
+
+
+```{r message=FALSE, warning=FALSE}
+
+#head(Data)
+Data18 <- Data %>% 
+        filter(Contract_Yr == "Contract 18") %>% 
+        group_by(Contract_Yr, Anticipated_Start) %>% 
+        summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+        mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%")) %>% 
+        filter(Inquiries > 48) %>%
+        mutate(Class = ifelse(Inquiries == 229, "Seniors", 
+                              ifelse(Inquiries == 417, "Juniors", 
+                                     ifelse(Inquiries == 311, "Sophomores", "Freshmen"))))
+
+kable(Data18 %>% 
+        select(Class, Inquiries, Apps, Admits, Deposits, Enrolls, App_Yield))
+
+
+      
+```
+
+#
+
+#
+
+#
+
+**Contract Year 2019: 11/6/2018-11/5/2019**
+
+
+```{r message=FALSE, warning=FALSE}
+Data19 <- Data %>% 
+        filter(Contract_Yr == "Contract 19") %>% 
+        group_by(Contract_Yr, Anticipated_Start) %>% 
+        summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+        mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))%>% 
+        filter(Inquiries > 45) %>%
+        mutate(Class = ifelse(Inquiries == 98, "Seniors", 
+                              ifelse(Inquiries == 917, "Juniors", 
+                                     ifelse(Inquiries == 264, "Sophomores", "Freshmen"))))
+
+kable(Data19 %>% 
+        select(Class, Inquiries, Apps, Admits, Deposits, Enrolls, App_Yield))
+```
+
+# Enrollment Funnel per our Database by State
+
+**Maine**
+
+
+```{r}
+kable(Data %>%
+  #filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start, Region) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+    filter(Region == "Maine", Anticipated_Start != "Unsure", Inquiries >= 72) %>% 
+    select(Anticipated_Start, Inquiries, Apps, Admits, Deposits, Enrolls) %>% 
+    mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))) 
+
+```
+
+
+
+#
+
+**Connecticut**
+
+```{r}
+kable(Data %>%
+  #filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start, Region) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+    filter(Region == "Connecticut", Anticipated_Start != "Unsure", Inquiries>23) %>% 
+    select(Anticipated_Start, Inquiries, Apps, Admits, Deposits, Enrolls) %>% 
+    mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))) 
+
+```
+
+
+#
+
+**Massachusetts**
+
+
+```{r}
+kable(Data %>%
+  #filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start, Region) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+    filter(Region == "Massachusetts", Anticipated_Start != "Unsure", Inquiries>145) %>% 
+    select(Anticipated_Start, Inquiries, Apps, Admits, Deposits, Enrolls) %>% 
+    mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))) 
+
+```
+
+#
+
+**New Hampshire**
+
+```{r}
+kable(Data %>%
+  #filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start, Region) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+    filter(Region == "New Hampshire", Anticipated_Start != "Unsure", Inquiries >22) %>% 
+    select(Anticipated_Start, Inquiries, Apps, Admits, Deposits, Enrolls) %>% 
+    mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))) 
+
+```
+
+#
+
+**New York**
+
+```{r}
+kable(Data %>%
+  #filter(Anticipated_Start %in% season) %>% 
+  group_by(Anticipated_Start, Region) %>% 
+  summarise(Inquiries = sum(Inquiry), 
+            Apps = sum(ApplieComplete.App)+ sum(Incomplete.App), 
+            Admits = sum(Admitted),
+            Deposits = sum(Confirmed),
+            Enrolls= sum(Enrolled)) %>% 
+    filter(Region == "New York", Anticipated_Start != "Unsure", Inquiries >45) %>% 
+    select(Anticipated_Start, Inquiries, Apps, Admits, Deposits, Enrolls) %>% 
+    mutate(App_Yield = paste0(round(Apps/Inquiries * 100, 2), "%"))) 
+
+```
+
+#
+
+# Conclusions
+
+* In the preliminary report, we became concerned because we saw a big 67% drop in Cappex inquiries. We decided to address this directly with Aaron Deets, our Cappex Representative. 
+
+* After 2 meetings with him, I requested the list of inquires for the past contract year. The list corroborated over 1,300 inquiries, slightly lower than the number of inquiries they provided the previous yea.  
+
+* I did a quick check and noticed many of the inquiry contact information was not in our database. 
+
+* I addressed this with John Derouche who ultimately diagnosed and remedied the upload problem. 
+
+* Moving forward, I will be included in the weekly email inquiry lists, Cappex and Hobson, to verify upload success.
+
+* I have reconciled the FY19 Cappex inquiry list with our records and the results are shown here. 
+
+* High School Juniors and Sophomores have highest application yields. We did see a very high application yield for Freshmen for the 2017 contract, however the sample size is small and I therefore advise caution.
+
+
+* We are seeing a growth in applications from students in MA and CT when looking at the data by anticipated start year. 
+
+
+
+
+
+
+```{r}
+Aaron <- read.csv("C:/Users/christine.iyer/Downloads/Southern Maine Cappex Inquiries 18-19 Contract.csv", header = T, stringsAsFactors = F)
+Aaron <- Aaron %>% rename(Email = Email.Address)
+
+```
+
+```{r}
+SFMatch <- read.csv("C:/Users/christine.iyer/Downloads/report1573827737406.csv", header = T, stringsAsFactors = F)
+
+```
+
+
+```{r}
+# bew <- merge.data.frame(Aaron,SFMatch, by = "Email")
+# dim(bew)
+# CappexFinal <- bew %>% group_by(Primary.State.Province,Student.Stage, App.Application.Status, Anticipated.Start.Term.Year, Initial.Referral.Source) %>% summarise(n = n())
+# dim(CappexFinal)
+# write.csv(CappexFinal, "C:/Users/christine.iyer/Box/FY19_Inquiries/Cappex Summary/CorrectedCappex.csv", row.names = F)
+
+#CorrectCappexTidy <- read.csv("C:/Users/christine.iyer/Box/FY19_Inquiries/Cappex Summary/CorrectedCappexTidied.csv", header = T, stringsAsFactors = F)
+
+```
+```{r}
+# sum(CorrectCappexTidy$Inquiry)
+# kable(CorrectCappexTidy %>% group_by(Antic.Start) %>% summarise(Inquiry = sum(Inquiry), Applicant = sum(Applicant), Enrolled = sum(Enrolled)))
+# kable(CorrectCappexTidy %>% group_by(Initial.Referral) %>% summarise(Inquiry = sum(Inquiry), Applicant = sum(Applicant), Enrolled = sum(Enrolled)) %>%  arrange(desc(Enrolled)))
+```
+
+#
+
+
+* Duplicates in our system may cause our numbers to vary from others used.
+
+* Year over year, does revenue justifies the contract cost? **Yes** 
+
+* Has Cappex  decreased from FY18 to FY19 as a 1st referral source. **No** 
+
+* After showing growth from FY16 to FY18, "All Referrals" showed no change from FY18 to FY19.**The vast majority of Contract Yr 19 inquiries were Juniors and Sophomores. I would anticipate if we continue to see grouth it will be among HS students who have anticipated start years of Fall 2020 and later.**
+
+* Does one class convert at a higher rate than another? **Juniors and Sophomores convert from inquiries to applicants at higher rates than seniors.**
+
+```{r bib, include=FALSE}
+# create a bib file for the R packages used in this document
+knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+```

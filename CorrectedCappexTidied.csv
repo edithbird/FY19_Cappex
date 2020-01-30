@@ -1,0 +1,120 @@
+Primary.State.Province,Antic Start,Initial.Referral,Inquiry,Applicant,Admitted,Confirmed,Enrolled
+Unknown,2019 or Earlier,CPPX,2,0,0,0,0
+Unknown,Fall 2020,CPPX,74,0,0,0,0
+Unknown,Fall 2021,CPPX,1,0,0,0,0
+Arizona,Fall 2021,CPPX,1,0,0,0,0
+California,2019 or Earlier,CPPX,5,0,0,0,0
+California,Fall 2020,CPPX,2,0,0,0,0
+California,Fall 2020,Mkt Form,1,0,0,0,0
+Colorado,2019 or Earlier,CPPX,1,0,0,0,0
+Connecticut,2019 or Earlier,CPPX,27,1,1,0,0
+Connecticut,2019 or Earlier,HBSN,1,1,0,0,0
+Connecticut,2019 or Earlier,Stealth,5,2,2,1,1
+Connecticut,2019 or Earlier,Other,1,0,0,0,0
+Connecticut,Fall 2020,CF,1,0,0,0,0
+Connecticut,Fall 2020,CPPX,38,2,2,1,0
+Connecticut,Fall 2020,FRNT,1,0,0,0,0
+Connecticut,Fall 2020,HBSN,2,1,0,0,0
+Connecticut,Fall 2021,CPPX,21,0,0,0,0
+Connecticut,Fall 2022,CPPX,3,0,0,0,0
+Florida,Fall 2020,CPPX,1,0,0,0,0
+Florida,Fall 2023,CPPX,1,0,0,0,0
+Georgia,Fall 2020,CPPX,2,0,0,0,0
+Idaho,2019 or Earlier,CPPX,4,0,0,0,0
+Idaho,Fall 2020,CPPX,1,0,0,0,0
+Illinois,2019 or Earlier,CPPX,2,0,0,0,0
+Illinois,Fall 2020,CPPX,2,0,0,0,0
+Indiana,Fall 2020,CPPX,1,0,0,0,0
+Iowa,2019 or Earlier,CPPX,1,0,0,0,0
+Iowa,Fall 2020,CPPX,2,0,0,0,0
+Kentucky,2019 or Earlier,CPPX,1,0,0,0,0
+Maine,Unknown,Other,2,0,0,0,0
+Maine,2019 or Earlier,CF,5,5,5,3,2
+Maine,2019 or Earlier,CPPX,67,31,29,11,10
+Maine,2019 or Earlier,FRNT,6,6,6,3,3
+Maine,2019 or Earlier,HBSN,4,4,4,2,2
+Maine,2019 or Earlier,Mkt Form,1,1,1,0,0
+Maine,2019 or Earlier,Stealth,61,55,51,14,8
+Maine,2019 or Earlier,WEB,1,0,0,0,0
+Maine,2019 or Earlier,Other,16,9,9,4,3
+Maine,Fall 2020,CF,4,0,0,0,0
+Maine,Fall 2020,CPPX,209,60,36,14,12
+Maine,Fall 2020,FRNT,5,2,0,0,0
+Maine,Fall 2020,HBSN,6,3,0,0,0
+Maine,Fall 2020,Mkt Form,1,0,0,0,0
+Maine,Fall 2020,Stealth,10,2,0,0,0
+Maine,Fall 2020,Other,2,1,0,0,0
+Maine,Fall 2021,CPPX,44,0,0,0,0
+Maine,Fall 2021,FRNT,2,0,0,0,0
+Maine,Fall 2021,Other,1,0,0,0,0
+Maine,Fall 2022,CPPX,6,0,0,0,0
+Maryland,2019 or Earlier,CPPX,1,0,0,0,0
+Massachusetts,2019 or Earlier,CPPX,14,2,2,0,0
+Massachusetts,2019 or Earlier,HBSN,1,1,1,1,1
+Massachusetts,2019 or Earlier,Stealth,6,5,5,1,1
+Massachusetts,2019 or Earlier,Other,2,0,0,0,0
+Massachusetts,Fall 2020,CF,1,1,0,0,0
+Massachusetts,Fall 2020,CPPX,71,8,1,1,1
+Massachusetts,Fall 2020,FRNT,3,1,0,0,0
+Massachusetts,Fall 2020,HBSN,2,1,0,0,0
+Massachusetts,Fall 2020,TOUR,1,0,0,0,0
+Massachusetts,Fall 2020,Other,1,1,0,0,0
+Massachusetts,Fall 2021,CPPX,30,0,0,0,0
+Massachusetts,Fall 2022,CPPX,1,0,0,0,0
+Michigan,2019 or Earlier,CPPX,1,0,0,0,0
+Minnesota,2019 or Earlier,CPPX,1,0,0,0,0
+Mississippi,Fall 2020,CPPX,1,0,0,0,0
+Nebraska,Fall 2020,CPPX,1,0,0,0,0
+Nevada,2019 or Earlier,CPPX,1,0,0,0,0
+Nevada,Fall 2020,CPPX,1,0,0,0,0
+New Hampshire,2019 or Earlier,CF,1,1,1,0,0
+New Hampshire,2019 or Earlier,CPPX,13,1,1,0,0
+New Hampshire,2019 or Earlier,FRNT,1,1,1,0,0
+New Hampshire,2019 or Earlier,Mkt Form,1,1,1,0,0
+New Hampshire,2019 or Earlier,Stealth,5,3,3,1,0
+New Hampshire,2019 or Earlier,WEB,1,1,1,1,1
+New Hampshire,2019 or Earlier,Other,2,1,1,0,0
+New Hampshire,Fall 2020,CF,1,0,0,0,0
+New Hampshire,Fall 2020,CPPX,43,2,0,0,0
+New Hampshire,Fall 2020,FRNT,3,3,0,0,0
+New Hampshire,Fall 2020,Stealth,2,1,0,0,0
+New Hampshire,Fall 2020,WEB,1,0,0,0,0
+New Hampshire,Fall 2021,CPPX,19,0,0,0,0
+New Hampshire,Fall 2022,CPPX,3,0,0,0,0
+New Jersey,Fall 2020,CPPX,1,0,0,0,0
+New Mexico,Fall 2020,CPPX,1,0,0,0,0
+New York,2019 or Earlier,CPPX,23,1,1,1,1
+New York,Fall 2020,CPPX,67,0,0,0,0
+New York,Fall 2020,HBSN,1,1,0,0,0
+New York,Fall 2020,Stealth,1,1,0,0,0
+New York,Fall 2020,Other,1,0,0,0,0
+New York,Fall 2021,CPPX,28,0,0,0,0
+New York,Fall 2022,CPPX,6,0,0,0,0
+North Carolina,2019 or Earlier,CPPX,1,0,0,0,0
+North Carolina,Fall 2020,CPPX,1,0,0,0,0
+Oklahoma,2019 or Earlier,CPPX,1,0,0,0,0
+Pennsylvania,2019 or Earlier,CPPX,1,0,0,0,0
+Pennsylvania,Fall 2020,CPPX,1,0,0,0,0
+Rhode Island,2019 or Earlier,CPPX,2,1,1,1,0
+Rhode Island,2019 or Earlier,Stealth,2,1,1,0,0
+Rhode Island,Fall 2020,CPPX,13,3,2,0,0
+Rhode Island,Fall 2020,Other,1,0,0,0,0
+Rhode Island,Fall 2021,CPPX,3,0,0,0,0
+South Carolina,2019 or Earlier,CPPX,1,0,0,0,0
+South Carolina,Fall 2020,CPPX,1,0,0,0,0
+South Dakota,2019 or Earlier,CPPX,1,0,0,0,0
+Tennessee,Fall 2020,CPPX,1,0,0,0,0
+Texas,2019 or Earlier,CPPX,3,0,0,0,0
+Texas,Fall 2020,CPPX,3,0,0,0,0
+Texas,Fall 2022,CPPX,1,0,0,0,0
+Utah,2019 or Earlier,CPPX,2,0,0,0,0
+Utah,Fall 2021,CPPX,2,0,0,0,0
+Utah,Fall 2022,CPPX,1,0,0,0,0
+Vermont,2019 or Earlier,CPPX,8,3,2,0,0
+Vermont,2019 or Earlier,Stealth,5,3,3,3,3
+Vermont,2019 or Earlier,Other,2,2,2,1,1
+Vermont,Fall 2020,CPPX,15,1,1,0,0
+Vermont,Fall 2020,HBSN,1,1,0,0,0
+Vermont,Fall 2020,Stealth,1,1,0,0,0
+Vermont,Fall 2021,CPPX,2,0,0,0,0
+Wisconsin,2019 or Earlier,CPPX,2,0,0,0,0
